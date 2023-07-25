@@ -90,7 +90,7 @@ public class CarroService {
         String sql = String.format("DELETE FROM carros WHERE id = '%d'", id);
         try {
             statement.executeUpdate(sql);
-            System.out.println("Carro de ID " + id + " deletado com sucesso!");
+            System.out.println("Carro de ID " + id + " saído do sistema com sucesso!");
         } catch (SQLException e) {
             e.printStackTrace();
         }

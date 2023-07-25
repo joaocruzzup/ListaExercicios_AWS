@@ -10,12 +10,14 @@ import static org.example.view.MenuView.selecionarOpcao;
 
 public class ClienteView {
     private ClienteController clienteController;
+    private MetodosView metodosView;
     private Scanner sc;
 
     public ClienteView() {
         ClienteService clienteService = new ClienteService();
         sc = new Scanner(System.in);
         clienteController = new ClienteController(clienteService);
+        metodosView = new MetodosView();
     }
 
     public void imprimirClienteMenu(){
@@ -28,6 +30,7 @@ public class ClienteView {
             System.out.println("3 - Cadastrar Cliente");
             System.out.println("4 - Atualizar Cliente");
             System.out.println("5 - Deletar Cliente");
+            System.out.println("0 - Voltar ao Menu Principal");
 
             opcao = selecionarOpcao();
             limparConsole();
@@ -68,7 +71,7 @@ public class ClienteView {
 
     public void imprimirConsultarClienteEspecifico(){
         System.out.print("Digite o ID do cliente ");
-        Long id = sc.nextLong();
+        Long id = metodosView.lerIdValido();
         sc.nextLine();
         clienteController.listById(id);
     }
@@ -77,13 +80,13 @@ public class ClienteView {
         System.out.print("Digite o nome do Cliente: ");
         String nome = sc.nextLine();
         System.out.print("Digite o cpf do Cliente (123.123.123-12) :");
-        String cpf = sc.nextLine();
+        String cpf = metodosView.lerCpfValido();
         clienteController.add(nome, cpf);
     }
 
     public void imprimirAtualizarCliente(){
         System.out.println("Digite o id do Cliente: ");
-        Long idCliente = sc.nextLong();
+        Long idCliente = metodosView.lerIdValido();
         sc.nextLine();
         System.out.println("Você deseja atualizar qual informação? (nome, cpf)");
         System.out.println("Digite aqui: ");

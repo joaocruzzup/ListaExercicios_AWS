@@ -13,12 +13,14 @@ import static org.example.view.MenuView.selecionarOpcao;
 public class PermanenciaView {
 
     private PermanenciaController permanenciaController;
+    private MetodosView metodosView;
     private Scanner sc;
 
     public PermanenciaView() {
         PermanenciaService permanenciaService = new PermanenciaService();
         sc = new Scanner(System.in);
         permanenciaController = new PermanenciaController(permanenciaService);
+        metodosView = new MetodosView();
     }
 
     public void imprimirPermanenciaMenu(){
@@ -31,6 +33,8 @@ public class PermanenciaView {
             System.out.println("3 - Cadastrar Permanência");
             System.out.println("4 - Atualizar Permanência");
             System.out.println("5 - Deletar Permanência");
+            System.out.println("0 - Voltar ao Menu Principal");
+
 
             opcao = selecionarOpcao();
             limparConsole();
@@ -71,29 +75,29 @@ public class PermanenciaView {
 
     public void imprimirConsultarPermanenciaEspecifico(){
         System.out.print("Digite o ID do cliente ");
-        Long id = sc.nextLong();
+        Long id = metodosView.lerIdValido();
         sc.nextLine();
         permanenciaController.listById(id);
     }
 
-    //ToDo verificar se está sendo adicionado no formato correto
     public void imprimirCadastrarPermanencia(){
         System.out.print("Digite o id do carro: ");
-        Long idPermanencia = sc.nextLong();
+        Long idPermanencia = metodosView.lerIdValido();
         sc.nextLine();
-        System.out.print("Digite a data de saída");
-        String data = sc.nextLine();
-        System.out.print("Digite a hora de saída");
-        String hora = sc.nextLine();
+        System.out.print("Digite a data de saída: (YYYY-MM-DD)");
+        String data = metodosView.lerDataValida();
+        System.out.print("Digite a hora de saída: (HH:MM:SS)");
+        String hora = metodosView.lerHoraValida();
+
 
         permanenciaController.add(idPermanencia, data, hora);
     }
 
     public void imprimirAtualizarPermanencia(){
         System.out.println("Digite o id do carro: ");
-        Long idPermanencia = sc.nextLong();
+        Long idPermanencia = metodosView.lerIdValido();
         sc.nextLine();
-        System.out.println("Você deseja atualizar qual informação? (data de saída, hora de saída)");
+        System.out.println("Você deseja atualizar qual informação? (valor)");
         System.out.println("Digite aqui: ");
         String coluna = sc.nextLine();
         System.out.println("Digite o novo valor que você deseja atualizar");

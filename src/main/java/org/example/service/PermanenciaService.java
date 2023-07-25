@@ -74,7 +74,7 @@ public class PermanenciaService {
 
     //ToDo Pensar numa forma de atualizar a permanência
     public void update(Long id, String coluna, String valorAtualizado) {
-        if (coluna.equalsIgnoreCase("nome") || coluna.equalsIgnoreCase("placa")) {
+        if (coluna.equalsIgnoreCase("valor")) {
             String sql = String.format("UPDATE permanencias SET %s = '%s' where id = '%d'", coluna, valorAtualizado, id);
             try {
                 statement.executeUpdate(sql);

@@ -37,7 +37,7 @@ public class MenuView {
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
             }
-        } while (opcao != 10);
+        } while (opcao != 0);
     }
 
     public void imprimirMenu() {
@@ -46,6 +46,7 @@ public class MenuView {
         System.out.println("1 - Acessar Menu CLIENTE");
         System.out.println("2 - Acessar Menu CARRO");
         System.out.println("3 - Acessar Menu RESERVA/PERMANÊNCIA");
+        System.out.println("0 - Sair do programa");
         System.out.println("Digite aqui a opção: ");
     }
 

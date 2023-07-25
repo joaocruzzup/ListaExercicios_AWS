@@ -15,11 +15,13 @@ import static org.example.view.MenuView.selecionarOpcao;
 public class CarroView {
     private CarroController carroController;
     private Scanner sc;
+    private MetodosView metodosView;
 
     public CarroView() {
         CarroService carroService = new CarroService();
         sc = new Scanner(System.in);
         carroController = new CarroController(carroService);
+        metodosView = new MetodosView();
     }
 
     public void imprimirCarroMenu(){
@@ -31,7 +33,9 @@ public class CarroView {
             System.out.println("2 - Consultar Carro específico");
             System.out.println("3 - Cadastrar Carro");
             System.out.println("4 - Atualizar Carro");
-            System.out.println("5 - Deletar Carro");
+            System.out.println("5 - Registrar saída Carro");
+            System.out.println("0 - Voltar ao Menu Principal");
+
 
             opcao = selecionarOpcao();
             limparConsole();
@@ -61,6 +65,12 @@ public class CarroView {
                     sc.nextLine();
                     limparConsole();
                     break;
+                case 5:
+                    imprimirDeleteCarro();
+                    System.out.println("Digite ENTER para voltar ao Menu");
+                    sc.nextLine();
+                    limparConsole();
+                    break;
 
                 default:
                     System.out.println("Digite uma opção válida");
@@ -72,7 +82,7 @@ public class CarroView {
 
     public void imprimirConsultarCarroEspecifico(){
         System.out.print("Digite o ID do cliente ");
-        Long id = sc.nextLong();
+        Long id = metodosView.lerIdValido();
         sc.nextLine();
         carroController.listById(id);
     }
@@ -80,23 +90,23 @@ public class CarroView {
     //ToDo verificar se está sendo adicionado no formato correto
     public void imprimirCadastrarCarro(){
         System.out.print("Digite o id do Cliente: ");
-        Long idCliente = sc.nextLong();
+        Long idCliente = metodosView.lerIdValido();
         sc.nextLine();
         System.out.print("Digite o nome do carro: ");
         String cpf = sc.nextLine();
         System.out.print("Digite a placa do carro: ");
         String placa = sc.nextLine();
         System.out.print("Digite a data de entrada: (YYYY-MM-DD) ");
-        String data = sc.nextLine();
+        String data = metodosView.lerDataValida();
         System.out.print("Digite a hora de entrada: (HH:MM:SS) ");
-        String hora = sc.nextLine();
+        String hora = metodosView.lerDataValida();
 
         carroController.add(idCliente, cpf, placa, data, hora);
     }
 
     public void imprimirAtualizarCarro(){
         System.out.println("Digite o id do Carro: ");
-        Long idCarro = sc.nextLong();
+        Long idCarro = metodosView.lerIdValido();
         sc.nextLine();
         System.out.println("Você deseja atualizar qual informação? (nome, placa)");
         System.out.println("Digite aqui: ");
@@ -104,5 +114,12 @@ public class CarroView {
         System.out.println("Digite o novo valor que você deseja atualizar");
         String valorAtualizado = sc.nextLine();
         carroController.update(idCarro, coluna, valorAtualizado);
+    }
+
+    public void imprimirDeleteCarro(){
+        System.out.println("Digite o id do carro: ");
+        Long idCarro = metodosView.lerIdValido();
+        sc.nextLine();
+        carroController.delete(idCarro);
     }
 }
