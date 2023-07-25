@@ -83,15 +83,12 @@ public class CarroView {
     public void imprimirConsultarCarroEspecifico(){
         System.out.print("Digite o ID do cliente ");
         Long id = metodosView.lerIdValido();
-        sc.nextLine();
         carroController.listById(id);
     }
 
-    //ToDo verificar se está sendo adicionado no formato correto
     public void imprimirCadastrarCarro(){
         System.out.print("Digite o id do Cliente: ");
         Long idCliente = metodosView.lerIdValido();
-        sc.nextLine();
         System.out.print("Digite o nome do carro: ");
         String cpf = sc.nextLine();
         System.out.print("Digite a placa do carro: ");
@@ -99,7 +96,7 @@ public class CarroView {
         System.out.print("Digite a data de entrada: (YYYY-MM-DD) ");
         String data = metodosView.lerDataValida();
         System.out.print("Digite a hora de entrada: (HH:MM:SS) ");
-        String hora = metodosView.lerDataValida();
+        String hora = metodosView.lerHoraValida();
 
         carroController.add(idCliente, cpf, placa, data, hora);
     }
@@ -107,7 +104,6 @@ public class CarroView {
     public void imprimirAtualizarCarro(){
         System.out.println("Digite o id do Carro: ");
         Long idCarro = metodosView.lerIdValido();
-        sc.nextLine();
         System.out.println("Você deseja atualizar qual informação? (nome, placa)");
         System.out.println("Digite aqui: ");
         String coluna = sc.nextLine();
@@ -119,7 +115,6 @@ public class CarroView {
     public void imprimirDeleteCarro(){
         System.out.println("Digite o id do carro: ");
         Long idCarro = metodosView.lerIdValido();
-        sc.nextLine();
         carroController.delete(idCarro);
     }
 }

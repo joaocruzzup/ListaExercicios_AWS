@@ -22,6 +22,7 @@ public class MetodosView {
             return id;
         } catch (InputMismatchException e) {
             System.out.println("Erro: Digite um número inteiro válido. Tente novamente.");
+            sc.nextLine();
             return null;
         }
     }
@@ -29,27 +30,31 @@ public class MetodosView {
     public String lerDataValida() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String data = sc.nextLine();
-        try {
-            LocalDate.parse(data, formatter);
-            return data;
-        } catch (DateTimeParseException e) {
-            System.out.println("Erro: Digite uma data válida no formato AAAA-MM-DD. Tente novamente.");
-            return null;
+        while (true) {
+            try {
+                LocalDate.parse(data, formatter);
+                return data;
+            } catch (Exception e) {
+                System.out.println("Erro: Digite uma data válida no formato YYYY-MM-DD. Tente novamente.");
+                data = sc.nextLine();
+            }
         }
     }
 
     public String lerHoraValida() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String hora = sc.nextLine();
-        try {
-            LocalTime.parse(hora, formatter);
-            return hora;
-        } catch (DateTimeParseException e) {
-            System.out.println("Erro: Digite uma hora válida no formato HH:mm:ss. Tente novamente.");
-            return null;
+        String hora;
+        while (true) {
+            hora = sc.nextLine();
+            try {
+                LocalTime.parse(hora, formatter);
+                return hora;
+            } catch (Exception e) {
+                System.out.println("Erro: Digite uma hora válida no formato HH:mm:ss. Tente novamente.");
+            }
         }
-
     }
+
 
     public String lerCpfValido() {
         String cpf;

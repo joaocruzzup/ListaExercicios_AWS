@@ -76,14 +76,12 @@ public class PermanenciaView {
     public void imprimirConsultarPermanenciaEspecifico(){
         System.out.print("Digite o ID do cliente ");
         Long id = metodosView.lerIdValido();
-        sc.nextLine();
         permanenciaController.listById(id);
     }
 
     public void imprimirCadastrarPermanencia(){
         System.out.print("Digite o id do carro: ");
         Long idPermanencia = metodosView.lerIdValido();
-        sc.nextLine();
         System.out.print("Digite a data de saída: (YYYY-MM-DD)");
         String data = metodosView.lerDataValida();
         System.out.print("Digite a hora de saída: (HH:MM:SS)");
@@ -96,7 +94,6 @@ public class PermanenciaView {
     public void imprimirAtualizarPermanencia(){
         System.out.println("Digite o id do carro: ");
         Long idPermanencia = metodosView.lerIdValido();
-        sc.nextLine();
         System.out.println("Você deseja atualizar qual informação? (valor)");
         System.out.println("Digite aqui: ");
         String coluna = sc.nextLine();
