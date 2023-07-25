@@ -76,7 +76,7 @@ public class ClienteView {
     public void imprimirCadastrarCliente(){
         System.out.print("Digite o nome do Cliente: ");
         String nome = sc.nextLine();
-        System.out.print("Digite o cpf do Cliente: (123.123.123-12)");
+        System.out.print("Digite o cpf do Cliente (123.123.123-12) :");
         String cpf = sc.nextLine();
         clienteController.add(nome, cpf);
     }

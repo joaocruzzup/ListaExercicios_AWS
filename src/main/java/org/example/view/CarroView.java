@@ -81,13 +81,14 @@ public class CarroView {
     public void imprimirCadastrarCarro(){
         System.out.print("Digite o id do Cliente: ");
         Long idCliente = sc.nextLong();
-        System.out.print("Digite o nome do carro");
+        sc.nextLine();
+        System.out.print("Digite o nome do carro: ");
         String cpf = sc.nextLine();
-        System.out.print("Digite a placa do carro");
+        System.out.print("Digite a placa do carro: ");
         String placa = sc.nextLine();
-        System.out.print("Digite a data de entrada");
+        System.out.print("Digite a data de entrada: (YYYY-MM-DD) ");
         String data = sc.nextLine();
-        System.out.print("Digite a hora de entrada");
+        System.out.print("Digite a hora de entrada: (HH:MM:SS) ");
         String hora = sc.nextLine();
 
         carroController.add(idCliente, cpf, placa, data, hora);

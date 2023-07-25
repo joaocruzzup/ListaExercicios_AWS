@@ -61,7 +61,7 @@ public class CarroService {
     }
 
     public void add(Long idCliente, String nome, String placa, String data, String hora) {
-        String sql = String.format("INSERT INTO clientes (id_cliente, nome, placa, data_entrada, hora_entrada)" +
+        String sql = String.format("INSERT INTO carros (id_cliente, nome, placa, data_entrada, hora_entrada)" +
                         " VALUES ('%d', '%s', '%s', '%s', '%s')",
                 idCliente, nome, placa, data, hora);
         try {

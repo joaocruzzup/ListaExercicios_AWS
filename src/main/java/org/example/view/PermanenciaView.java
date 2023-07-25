@@ -78,8 +78,9 @@ public class PermanenciaView {
 
     //ToDo verificar se está sendo adicionado no formato correto
     public void imprimirCadastrarPermanencia(){
-        System.out.print("Digite o id da permanência: ");
+        System.out.print("Digite o id do carro: ");
         Long idPermanencia = sc.nextLong();
+        sc.nextLine();
         System.out.print("Digite a data de saída");
         String data = sc.nextLine();
         System.out.print("Digite a hora de saída");
@@ -89,7 +90,7 @@ public class PermanenciaView {
     }
 
     public void imprimirAtualizarPermanencia(){
-        System.out.println("Digite o id da Permanência: ");
+        System.out.println("Digite o id do carro: ");
         Long idPermanencia = sc.nextLong();
         sc.nextLine();
         System.out.println("Você deseja atualizar qual informação? (data de saída, hora de saída)");

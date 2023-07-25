@@ -1,9 +1,10 @@
 package org.example.service;
 
-import javax.swing.plaf.nimbus.State;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDate;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.example.Conexao.getConnection;
 
@@ -57,11 +58,12 @@ public class PermanenciaService {
         }
     }
 
-    //ToDo Adicionar uma lógica para calcular o valor a ser pago
     public void add(Long idCarro, String data_saida, String hora_saida) {
-        String sql = String.format("INSERT INTO clientes (idCarro, data_saida, hora_saida, data_entrada, hora_entrada)" +
-                        " VALUES ('%d', '%s', '%s')",
-                idCarro, data_saida, hora_saida);
+        BigDecimal valor = BigDecimal.valueOf(permanenciaValue(idCarro));
+        int valorFormatado = valor.intValue();
+        String sql = String.format("INSERT INTO permanencias (idCarro, data_saida, hora_saida, valor)" +
+                        " VALUES ('%d', '%s', '%s', '%s')",
+                idCarro, data_saida, hora_saida, valorFormatado);
         try {
             statement.executeUpdate(sql);
             System.out.println("Permanência adicionada com sucesso!");
@@ -73,7 +75,7 @@ public class PermanenciaService {
     //ToDo Pensar numa forma de atualizar a permanência
     public void update(Long id, String coluna, String valorAtualizado) {
         if (coluna.equalsIgnoreCase("nome") || coluna.equalsIgnoreCase("placa")) {
-            String sql = String.format("UPDATE carros SET %s = '%s' where id = '%d'", coluna, valorAtualizado, id);
+            String sql = String.format("UPDATE permanencias SET %s = '%s' where id = '%d'", coluna, valorAtualizado, id);
             try {
                 statement.executeUpdate(sql);
                 System.out.println("Carro de ID " + id + " atualizado com sucesso!");
@@ -93,6 +95,48 @@ public class PermanenciaService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public long permanenciaValue(long id){
+        String sql = String.format("SELECT data_entrada, hora_entrada, data_saida, hora_saida FROM carros " +
+                "JOIN permanencias ON carros.id = permanencias.idCarro " +
+                "WHERE carros.id = '%d'", id);
+        try {
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+
+                String dataEntrada = resultSet.getString("data_entrada");
+                String horaEntrada = resultSet.getString("hora_entrada");
+                String dataSaida = resultSet.getString("data_saida");
+                String horaSaida = resultSet.getString("hora_saida");
+
+                Long minutos = calculePermanenciaValue(dataEntrada, horaEntrada, dataSaida, horaSaida);
+                int valor = 0;
+                if (minutos <= 60 ){
+                    valor = 10;
+                }
+                else if (minutos <= 720) {
+                    int adicional = (int) Math.ceil((minutos - 60) / 30.0);
+                    valor = 10 + (adicional * 2);
+                }
+                else {
+                    valor = 90;
+                }
+                return valor;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public long calculePermanenciaValue(String dataEntrada, String horaEntrada,
+                                        String dataSaida, String horaSaida) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime entrada = LocalDateTime.parse(dataEntrada + " " + horaEntrada , formatter);
+        LocalDateTime saida = LocalDateTime.parse(dataSaida + " " + horaSaida , formatter);
+
+        return java.time.Duration.between(entrada, saida).toMinutes();
     }
 
 
